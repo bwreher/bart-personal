@@ -1,4 +1,5 @@
 #!/bin/bash
+# Helper script for commonly used flags in the Closure Compiler.
 
 usage() {
     cat <<EOF >&2
