@@ -1,0 +1,54 @@
+#!/bin/bash
+
+usage() {
+    cat <<EOF >&2
+Usage: $0 -n project-namespace -r project-root [COMPILATION_LEVEL] filename
+
+Runs the ClosureBuilder script on a Javascript project with the given
+compilation level. Outputs the compiled Javascript to the given file.
+
+All flags are mandatory, including one compilation level.
+  -h    	Print this help menu
+  -n    	Namespace(s) included in the compiled project
+  -r    	Root directory for the project
+  filename	Location of the compiled Javascript project
+
+Compilation Levels:
+  -a    Compile with ADVANCED_OPTIMIZATIONS
+  -s    Compile with SIMPLE_OPTIMIZATIONS
+  -w    Compile with WHITESPACE_ONLY
+EOF
+exit 1
+}
+
+flags='ahn:r:sw'
+
+while getopts $flags flag
+do
+    case $flag in
+	h) usage;;
+        r) root=${OPTARG};;
+        n) namespace=${OPTARG};;
+	a) level="ADVANCED_OPTIMIZATIONS";;
+	s) level="SIMPLE_OPTIMIZATIONS";;
+	w) level="WHITESPACE_ONLY";;
+	*) usage;;
+    esac
+done
+
+filename=${@: -1};
+
+if [ -z "$root" -o -z "$namespace" ] || [ -z "$level" -o -z "$filename" ]; then
+    usage
+elif [ $# -ne 6 ]; then
+    usage
+fi
+
+/usr/local/lib/closure/bin/build/closurebuilder.py \
+  --root=/src/third_party/closure/ \
+  --root=$root \
+  --namespace="$namespace" \
+  --output_mode=compiled \
+  --compiler_jar=/usr/local/lib/closure-compiler/compiler.jar \
+  --compiler_flags="--compilation_level=$level" \
+  > $filename

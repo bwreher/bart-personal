@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+if [ -n "$SSH_CLIENT" ]; then
+    /usr/bin/meld $*
+else
+    /usr/bin/vimdiff $*
+fi
