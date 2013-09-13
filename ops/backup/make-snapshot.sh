@@ -114,7 +114,7 @@ rm -r $SNAPSHOT_DIRECTORY/$frequency.$((num_snapshots-1))
 if [ "$num_snapshots" -gt 1 ]; then
     for i in $(seq $num_snapshots -1 2)
     do
-        cp -a -p $SNAPSHOT_DIRECTORY/$frequency.$((i-2)) $SNAPSHOT_DIRECTORY/$frequency.$((i-1))
+        mv $SNAPSHOT_DIRECTORY/$frequency.$((i-2)) $SNAPSHOT_DIRECTORY/$frequency.$((i-1))
     done
 
     # Make room for the new snapshot sync.
