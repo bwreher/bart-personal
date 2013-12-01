@@ -1,0 +1,24 @@
+[alias]
+    br = branch
+    ci = commit
+    co = checkout
+    st = status
+[user]
+	name = Brandon Reher
+	email = # Email
+[credential]
+	helper = cache
+[core]
+	editor = vim
+[color]
+	ui = true
+[merge]
+	tool = git-merge
+[mergetool "git-merge"]
+	cmd = git-merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	trustExitCode = false
+[diff]
+	external = /usr/local/bin/git-diff
+[pager]
+	diff = 
