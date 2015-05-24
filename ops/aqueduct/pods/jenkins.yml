@@ -1,0 +1,25 @@
+apiVersion: v1beta3
+kind: Pod
+metadata:
+  labels:
+    name: jenkins
+  name: jenkins-master
+spec:
+  containers:
+    - image: jenkins:1.596.2
+      name: jenkins-master
+      command:
+        - /usr/local/bin/jenkins.sh
+      ports:
+        - name: jenkins-web
+          containerPort: 8080
+          protocol: TCP
+      volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
+  volumes:
+    - name: jenkins-home
+      hostPath:
+        path: /opt/jenkins
+  nodeSelector:
+    role: jenkins-master
